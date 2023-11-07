@@ -78,8 +78,6 @@ combined <- combined[combined$EVENT_TYPE %in% floodTypes, ]
 unique_incidents <- unique(combined$EVENT_TYPE)
 print(unique_incidents)
 
-# Assuming your data frame is named 'combined'
-# Assuming your combined dataset is named 'combined'
 combined1 <- combined[, c("EVENT_ID", "EPISODE_ID", "STATE", "YEAR", "INJURIES_DIRECT", "INJURIES_INDIRECT", "DEATHS_DIRECT", "DEATHS_INDIRECT", "DAMAGE_PROPERTY", "DAMAGE_CROPS", "FLOOD_CAUSE", "BEGIN_LAT", "BEGIN_LON", "END_LAT", "END_LON", "MONTH_NAME", "BEGIN_DATE_TIME", "END_DATE_TIME","BEGIN_YEARMONTH", "END_YEARMONTH","EVENT_TYPE")]
 
 # Count missing values in each column of the dataset
@@ -202,7 +200,6 @@ flood_summary <- combined1 %>%
 states_map <- map_data("state")
 
 # Merge the flood summary with the map data
-# Ensure the state names match in case format or naming conventions differ
 flood_summary$STATE <- tolower(flood_summary$STATE)
 map_data_merged <- merge(states_map, flood_summary, by.x = "region", by.y = "STATE", all.x = TRUE)
 
@@ -253,7 +250,7 @@ This quartile-based categorization underscores a discernible pattern: communitie
 
 
 ```{r,echo = FALSE}
-# Make sure BEGIN_DATE_TIME is in the correct datetime format
+# to make BEGIN_DATE_TIME in the correct datetime format
 combined1$BEGIN_DATE_TIME <- as.POSIXct(combined1$BEGIN_DATE_TIME, format = "%d-%b-%y %T", tz = "UTC")
 
 # Group the data by month and year, or by another suitable time period
@@ -356,8 +353,6 @@ combined <- combined[combined$EVENT_TYPE %in% floodTypes, ]
 unique_incidents <- unique(combined$EVENT_TYPE)
 print(unique_incidents)
 
-# Assuming your data frame is named 'combined'
-# Assuming your combined dataset is named 'combined'
 combined1 <- combined[, c("EVENT_ID", "EPISODE_ID", "STATE", "YEAR", "INJURIES_DIRECT", "INJURIES_INDIRECT", "DEATHS_DIRECT", "DEATHS_INDIRECT", "DAMAGE_PROPERTY", "DAMAGE_CROPS", "FLOOD_CAUSE", "BEGIN_LAT", "BEGIN_LON", "END_LAT", "END_LON", "MONTH_NAME", "BEGIN_DATE_TIME", "END_DATE_TIME","BEGIN_YEARMONTH", "END_YEARMONTH","EVENT_TYPE")]
 
 # Count missing values in each column of the dataset
