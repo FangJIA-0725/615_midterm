@@ -9,13 +9,16 @@ engine: knitr
 ## Initial questions
 
 The purpose of this report is to analyze the flood that occurred in the US between 2020 and 2021. The three questions we want to investigate are : 
+
 1. How dangerous are floods? 
+
 2. How expensive are floods? 
+
 3. Is there any pattern to the kinds of communities that suffer losses from floods?
 
 ## The data
 
-The dataset for this analysis has been sourced from the National Centers for Environmental Information (NCEI) available at NOAA's Storm Events Database. Specific datasets were obtained from the NOAA's FTP server, which included information on flood locations, details, and fatalities for the years 2020 and 2021. Our focus is on flood events, and thus, only records that categorize events as Flood, Coastal Flood, Flash Flood, or Lakeshore Flood were considered. Key variables such as direct deaths, direct injuries, state, and year were included in the analysis. It was observed that the dataset contained 130 missing entries for the 'damage_property' variable and 47 missing for 'damage_crops.' These missing values have been imputed with zeros for this analysis.
+The dataset for this analysis has been sourced from the National Centers for Environmental Information (NCEI) available at NOAA's Storm Events Database. Specific datasets were obtained from the NOAA's FTP server, which included information on flood locations, details, and fatalities for the years 2020 and 2021. Our focus is on flood events, and thus, only records that categorize events as Flood, Coastal Flood, Flash Flood, or Lakeshore Flood were considered. Key variables such as direct deaths, direct injuries, state, and year were included in the analysis. It was observed that the dataset contained 2240 missing entries for the 'begin_lat', 'begin_lon', 'end_lat'and 'end_lon' variables. These missing values have been imputed with zeros for this analysis. 
 
 ```{r, echo = FALSE}
 #| label: Load libraries
@@ -31,7 +34,7 @@ library(jsonlite)
 library(dplyr)
 library(ggplot2)
 library(maps)
-
+library(scales) 
 ```
 
 
@@ -77,7 +80,7 @@ print(unique_incidents)
 
 # Assuming your data frame is named 'combined'
 # Assuming your combined dataset is named 'combined'
-combined1 <- combined[, c("EVENT_ID", "EPISODE_ID", "STATE", "YEAR", "INJURIES_DIRECT", "INJURIES_INDIRECT", "DEATHS_DIRECT", "DEATHS_INDIRECT", "DAMAGE_PROPERTY", "DAMAGE_CROPS", "FLOOD_CAUSE", "BEGIN_LAT", "BEGIN_LON", "END_LAT", "END_LON", "MONTH_NAME", "BEGIN_DATE_TIME", "END_DATE_TIME","BEGIN_YEARMONTH", "END_YEARMONTH")]
+combined1 <- combined[, c("EVENT_ID", "EPISODE_ID", "STATE", "YEAR", "INJURIES_DIRECT", "INJURIES_INDIRECT", "DEATHS_DIRECT", "DEATHS_INDIRECT", "DAMAGE_PROPERTY", "DAMAGE_CROPS", "FLOOD_CAUSE", "BEGIN_LAT", "BEGIN_LON", "END_LAT", "END_LON", "MONTH_NAME", "BEGIN_DATE_TIME", "END_DATE_TIME","BEGIN_YEARMONTH", "END_YEARMONTH","EVENT_TYPE")]
 
 # Count missing values in each column of the dataset
 colSums(is.na(combined1))
@@ -85,6 +88,11 @@ colSums(is.na(combined1))
 # Count total missing values in the dataset
 sum(is.na(combined1))
 combined1[is.na(combined1)] <- 0
+```
+
+Below is the first few rows of the dataset. 
+
+```{r warning=FALSE, message=FALSE,echo = FALSE}
 head(combined1)
 ```
 
@@ -127,10 +135,20 @@ ggplot(injuries_deaths_long, aes(x = EVENT_TYPE, y = Count, fill = Metric)) +
        fill = 'Metric')
 ```
 
-The analysis presented in Graph 1 provided a clear depiction of the human impact associated with different types of floods for the years 2020 and 2021. Flash floods were identified as the most lethal, with the total number of deaths significantly exceeding the number of injuries, emphasizing the acute danger they posed. The category labelled 'Flood' was the second most significant in terms of human impact, contributing considerably to the overall toll of casualties. In contrast, 'Lakeshore Flood' and 'Coastal Flood' events were associated with the fewest injuries and reported no fatalities. In total, there were 295 recorded instances of injuries and deaths related to floods, with flash floods accounting for an overwhelming 84% of these incidents. This data highlights the disproportionate risk of flash floods, reinforcing the need for targeted resources and safety measures to mitigate their threat. Even 'Lakeshore' and 'Coastal' floods, which had less impact in comparison, still resulted in harm, indicating that all types of floods carry inherent risks and warrant attention in disaster preparedness and response strategies.
+The analysis presented in Graph 1 provided a clear depiction of the human impact associated with different types of floods for the years 2020 and 2021. Flash floods were identified as the most lethal, with the total number of deaths significantly exceeding the number of injuries, emphasizing the acute danger they posed. The category labelled 'Flood' was the second most significant in terms of human impact, contributing considerably to the overall toll of casualties. In contrast, 'Lakeshore Flood' and 'Coastal Flood' events were associated with the fewest injuries and reported no fatalities.
+
+In total, there were 295 recorded instances of injuries and deaths related to floods, with flash floods accounting for an overwhelming 84% of these incidents. This data highlights the disproportionate risk of flash floods, reinforcing the need for targeted resources and safety measures to mitigate their threat. Even 'Lakeshore' and 'Coastal' floods, which had less impact in comparison, still resulted in harm, indicating that all types of floods carry inherent risks and warrant attention in disaster preparedness and response strategies.
 
 
 ```{r,echo = FALSE}
+
+convert_damage <- function(damage) {
+  damage <- gsub("[^0-9.]", "", as.character(damage))
+  as.numeric(damage)
+}
+combined1$DAMAGE_PROPERTY <- convert_damage(combined1$DAMAGE_PROPERTY)
+combined1$DAMAGE_CROPS <- convert_damage(combined1$DAMAGE_CROPS)
+
 damage_by_type <- combined1 %>%
   group_by(EVENT_TYPE) %>%
   summarise(Total_Property_Damage = sum(DAMAGE_PROPERTY, na.rm = TRUE),
@@ -169,7 +187,9 @@ print(ggplot_object)
 
 ```
 
-Between 2020 and 2021, flash floods were not only the deadliest but also the most economically damaging type of flood. Property damage from flash floods amounted to 130,445.4k (130.4 million USD), nearly twice as much as the crop damage caused by the same flood type. The broadly categorized 'Flood' events resulted in the second-highest economic loss, impacting property and crops significantly. 'Lakeshore Floods,' while less fatal, still led to substantial property damage but did not affect crop yields. 'Coastal Floods' had the least economic impact, with 2,842k (2.8 million USD) in property damage and a minimal 2k (2,000 USD) in crop damage. In total, the economic toll from floods over this period exceeded 190,000k (190 million USD). Flash floods accounted for over 70% of this economic burden, highlighting their severe financial consequences and risk to human safety. Even the less lethal flood types, such as 'Lakeshore' and 'Coastal' floods, still resulted in notable damages, contributing 2,844k (2.8 million USD) to the overall economic losses.
+Between 2020 and 2021, flash floods were not only the deadliest but also the most economically damaging type of flood. Property damage from flash floods amounted to 130,445.4k (130.4 million USD), nearly twice as much as the crop damage caused by the same flood type. The broadly categorized 'Flood' events resulted in the second-highest economic loss, impacting property and crops significantly. 'Lakeshore Floods,' while less fatal, still led to substantial property damage but did not affect crop yields. 'Coastal Floods' had the least economic impact, with 2,842k (2.8 million USD) in property damage and a minimal 2k (2,000 USD) in crop damage. 
+
+In total, the economic toll from floods over this period exceeded 190,000k (190 million USD). Flash floods accounted for over 70% of this economic burden, highlighting their severe financial consequences and risk to human safety. Even the less lethal flood types, such as 'Lakeshore' and 'Coastal' floods, still resulted in notable damages, contributing 2,844k (2.8 million USD) to the overall economic losses.
 
 
 ```{r,echo = FALSE}
@@ -197,19 +217,23 @@ ggplot(data = map_data_merged, aes(x = long, y = lat, group = group, fill = Floo
   theme_void() +
   theme(legend.position = "right")
 
-quantiles <- quantile(flood_summary$Frequency, probs = c(0.25, 0.5, 0.75))
+quantiles <- quantile(flood_summary$Flood_Count, probs = c(0.25, 0.5, 0.75))
 
 # Categorize states into frequency levels
 flood_summary <- flood_summary %>%
   mutate(Frequency_Level = case_when(
-    Frequency > quantiles[3] ~ 'High Frequency',
-    Frequency > quantiles[2] ~ 'Moderate Frequency',
-    Frequency > quantiles[1] ~ 'Low Frequency',
+    Flood_Count > quantiles[3] ~ 'High Frequency',
+    Flood_Count > quantiles[2] ~ 'Moderate Frequency',
+    Flood_Count > quantiles[1] ~ 'Low Frequency',
     TRUE ~ 'Very Low Frequency'
   ))
+top_flood_states <- flood_summary %>%
+  arrange(desc(Flood_Count)) %>%
+  slice(1:10) 
 
-# View the summary with frequency levels
-print(flood_summary)
+# View the top 10 states with the highest flood counts
+print(top_flood_states)
+
 ```
 
 In examining the geographic distribution of flood events across the United States, the data from 2020 and 2021 indicates that certain states experienced a higher frequency of flooding. Particularly, Virginia, Missouri, and Texas stand out, with recorded flood event counts of 1040, 797, and 751, respectively. The visualization employs varying shades of blue to denote the prevalence of flooding, with darker hues signifying a more significant number of incidents.
@@ -253,6 +277,7 @@ The data also exhibits a seasonal pattern, with flood events tending to escalate
 
 
 ```{r,echo = FALSE}
+
 flood_cause_stats <- combined1 %>%
   group_by(FLOOD_CAUSE) %>%
   summarise(
@@ -261,13 +286,7 @@ flood_cause_stats <- combined1 %>%
     TotalDeaths = sum(DEATHS_DIRECT + DEATHS_INDIRECT, na.rm = TRUE),
     TotalDamage = sum(DAMAGE_PROPERTY + DAMAGE_CROPS, na.rm = TRUE)
   ) %>%
-  ungroup() %>%  # Remove grouping before calculating percentages
-  mutate(
-    Percentage_of_Count = (Count / sum(Count)) * 100,
-    Percentage_of_Injuries = (TotalInjuries / sum(TotalInjuries)) * 100,
-    Percentage_of_Deaths = (TotalDeaths / sum(TotalDeaths)) * 100,
-    Percentage_of_Damage = (TotalDamage / sum(TotalDamage)) * 100
-  ) %>%
+  ungroup() %>%
   mutate(FLOOD_CAUSE = factor(FLOOD_CAUSE, levels = FLOOD_CAUSE[order(Count, decreasing = TRUE)])) # Order factors by count
 
 # View the updated summary
@@ -292,7 +311,6 @@ In conclusion, Floods pose a significant threat to life and property across the 
 
 ## Appendix 
 ```{r,eval=FALSE}
-
 library(knitr)  
 library(kableExtra)
 library(stringr)
@@ -302,6 +320,7 @@ library(jsonlite)
 library(dplyr)
 library(ggplot2)
 library(maps)
+library(scales) 
 # Import Datasets from NOAA
 fatalities2020 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_fatalities-ftp_v1.0_d2020_c20230927.csv")
 fatalities2021 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_fatalities-ftp_v1.0_d2021_c20231017.csv")
@@ -339,7 +358,7 @@ print(unique_incidents)
 
 # Assuming your data frame is named 'combined'
 # Assuming your combined dataset is named 'combined'
-combined1 <- combined[, c("EVENT_ID", "EPISODE_ID", "STATE", "YEAR", "INJURIES_DIRECT", "INJURIES_INDIRECT", "DEATHS_DIRECT", "DEATHS_INDIRECT", "DAMAGE_PROPERTY", "DAMAGE_CROPS", "FLOOD_CAUSE", "BEGIN_LAT", "BEGIN_LON", "END_LAT", "END_LON", "MONTH_NAME", "BEGIN_DATE_TIME", "END_DATE_TIME","BEGIN_YEARMONTH", "END_YEARMONTH")]
+combined1 <- combined[, c("EVENT_ID", "EPISODE_ID", "STATE", "YEAR", "INJURIES_DIRECT", "INJURIES_INDIRECT", "DEATHS_DIRECT", "DEATHS_INDIRECT", "DAMAGE_PROPERTY", "DAMAGE_CROPS", "FLOOD_CAUSE", "BEGIN_LAT", "BEGIN_LON", "END_LAT", "END_LON", "MONTH_NAME", "BEGIN_DATE_TIME", "END_DATE_TIME","BEGIN_YEARMONTH", "END_YEARMONTH","EVENT_TYPE")]
 
 # Count missing values in each column of the dataset
 colSums(is.na(combined1))
@@ -348,7 +367,6 @@ colSums(is.na(combined1))
 sum(is.na(combined1))
 combined1[is.na(combined1)] <- 0
 head(combined1)
-
 combined1 <- combined1 %>%
   mutate(Total_Injuries = INJURIES_DIRECT + INJURIES_INDIRECT,
          Total_Deaths = DEATHS_DIRECT + DEATHS_INDIRECT)
@@ -382,6 +400,12 @@ ggplot(injuries_deaths_long, aes(x = EVENT_TYPE, y = Count, fill = Metric)) +
        x = 'Flood Type',
        y = 'Count',
        fill = 'Metric')
+convert_damage <- function(damage) {
+  damage <- gsub("[^0-9.]", "", as.character(damage))
+  as.numeric(damage)
+}
+combined1$DAMAGE_PROPERTY <- convert_damage(combined1$DAMAGE_PROPERTY)
+combined1$DAMAGE_CROPS <- convert_damage(combined1$DAMAGE_CROPS)
 
 damage_by_type <- combined1 %>%
   group_by(EVENT_TYPE) %>%
@@ -418,7 +442,6 @@ ggplot_object <- ggplot(damage_long, aes(x = EVENT_TYPE, y = Amount, fill = Dama
 
 # Print the plot
 print(ggplot_object)
-
 # Summarize flood events by state
 flood_summary <- combined1 %>%
   group_by(STATE) %>%
@@ -443,20 +466,22 @@ ggplot(data = map_data_merged, aes(x = long, y = lat, group = group, fill = Floo
   theme_void() +
   theme(legend.position = "right")
 
-quantiles <- quantile(flood_summary$Frequency, probs = c(0.25, 0.5, 0.75))
+quantiles <- quantile(flood_summary$Flood_Count, probs = c(0.25, 0.5, 0.75))
 
 # Categorize states into frequency levels
 flood_summary <- flood_summary %>%
   mutate(Frequency_Level = case_when(
-    Frequency > quantiles[3] ~ 'High Frequency',
-    Frequency > quantiles[2] ~ 'Moderate Frequency',
-    Frequency > quantiles[1] ~ 'Low Frequency',
+    Flood_Count > quantiles[3] ~ 'High Frequency',
+    Flood_Count > quantiles[2] ~ 'Moderate Frequency',
+    Flood_Count > quantiles[1] ~ 'Low Frequency',
     TRUE ~ 'Very Low Frequency'
   ))
+top_flood_states <- flood_summary %>%
+  arrange(desc(Flood_Count)) %>%
+  slice(1:10) 
 
-# View the summary with frequency levels
-print(flood_summary)
-
+# View the top 10 states with the highest flood counts
+print(top_flood_states)
 # Make sure BEGIN_DATE_TIME is in the correct datetime format
 combined1$BEGIN_DATE_TIME <- as.POSIXct(combined1$BEGIN_DATE_TIME, format = "%d-%b-%y %T", tz = "UTC")
 
@@ -472,7 +497,6 @@ ggplot(floods_over_time, aes(x = YearMonth, y = NumberOfEvents)) +
   labs(title = "Graph 4: Distribution of Flood Events Over Time", x = "Time", y = "Number of Events") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) # Rota
-
 flood_cause_stats <- combined1 %>%
   group_by(FLOOD_CAUSE) %>%
   summarise(
@@ -481,13 +505,7 @@ flood_cause_stats <- combined1 %>%
     TotalDeaths = sum(DEATHS_DIRECT + DEATHS_INDIRECT, na.rm = TRUE),
     TotalDamage = sum(DAMAGE_PROPERTY + DAMAGE_CROPS, na.rm = TRUE)
   ) %>%
-  ungroup() %>%  # Remove grouping before calculating percentages
-  mutate(
-    Percentage_of_Count = (Count / sum(Count)) * 100,
-    Percentage_of_Injuries = (TotalInjuries / sum(TotalInjuries)) * 100,
-    Percentage_of_Deaths = (TotalDeaths / sum(TotalDeaths)) * 100,
-    Percentage_of_Damage = (TotalDamage / sum(TotalDamage)) * 100
-  ) %>%
+  ungroup() %>%
   mutate(FLOOD_CAUSE = factor(FLOOD_CAUSE, levels = FLOOD_CAUSE[order(Count, decreasing = TRUE)])) # Order factors by count
 
 # View the updated summary
@@ -502,6 +520,3 @@ ggplot(flood_cause_melted, aes(x = FLOOD_CAUSE, y = Value, fill = Metric)) +
   labs(title = "Graph 5: Flood Impact by Cause", x = "Cause of Flood", y = "Total") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) #
 ```
-
-
-
