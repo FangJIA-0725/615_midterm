@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Fang Jia">
+<meta name="dcterms.date" content="2023-10-11">
+
+<title>Severity and Impact of Flood Events in the United States: A 2020-2021 Overview</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="midterm615_files/libs/clipboard/clipboard.min.js"></script>
+<script src="midterm615_files/libs/quarto-html/quarto.js"></script>
+<script src="midterm615_files/libs/quarto-html/popper.min.js"></script>
+<script src="midterm615_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="midterm615_files/libs/quarto-html/anchor.min.js"></script>
+<link href="midterm615_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="midterm615_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="midterm615_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="midterm615_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="midterm615_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Severity and Impact of Flood Events in the United States: A 2020-2021 Overview</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Fang Jia </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 11, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="initial-questions" class="level2">
+<h2 class="anchored" data-anchor-id="initial-questions">Initial questions</h2>
+<p>The purpose of this report is to analyze the flood that occurred in the US between 2020 and 2021. The three questions we want to investigate are :</p>
+<ol type="1">
+<li><p>How dangerous are floods?</p></li>
+<li><p>How expensive are floods?</p></li>
+<li><p>Is there any pattern to the kinds of communities that suffer losses from floods?</p></li>
+</ol>
+</section>
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<p>The dataset for this analysis has been sourced from the National Centers for Environmental Information (NCEI) available at NOAA’s Storm Events Database. Specific datasets were obtained from the NOAA’s FTP server, which included information on flood locations, details, and fatalities for the years 2020 and 2021. Our focus is on flood events, and thus, only records that categorize events as Flood, Coastal Flood, Flash Flood, or Lakeshore Flood were considered. Key variables such as direct deaths, direct injuries, state, and year were included in the analysis. It was observed that the dataset contained 2240 missing entries for the ‘begin_lat’, ‘begin_lon’, ‘end_lat’and ’end_lon’ variables. These missing values have been imputed with zeros for this analysis.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Flood"           "Lakeshore Flood" "Flash Flood"     "Coastal Flood"  </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         EVENT_ID        EPISODE_ID             STATE              YEAR 
+                0                 0                 0                 0 
+  INJURIES_DIRECT INJURIES_INDIRECT     DEATHS_DIRECT   DEATHS_INDIRECT 
+                0                 0                 0                 0 
+  DAMAGE_PROPERTY      DAMAGE_CROPS       FLOOD_CAUSE         BEGIN_LAT 
+                0                 0                 0               560 
+        BEGIN_LON           END_LAT           END_LON        MONTH_NAME 
+              560               560               560                 0 
+  BEGIN_DATE_TIME     END_DATE_TIME   BEGIN_YEARMONTH     END_YEARMONTH 
+                0                 0                 0                 0 
+       EVENT_TYPE 
+                0 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2240</code></pre>
+</div>
+</div>
+<p>Below is the first few rows of the dataset.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>    EVENT_ID EPISODE_ID          STATE YEAR INJURIES_DIRECT INJURIES_INDIRECT
+7     863537     143838      WISCONSIN 2020               0                 0
+15    863585     143845      WISCONSIN 2020               0                 0
+21    863586     143845      WISCONSIN 2020               0                 0
+171   864250     143983      WISCONSIN 2020               0                 0
+172   864251     143983      WISCONSIN 2020               0                 0
+203   864461     144018 NORTH CAROLINA 2020               0                 0
+    DEATHS_DIRECT DEATHS_INDIRECT DAMAGE_PROPERTY DAMAGE_CROPS
+7               0               0          96.00K        0.00K
+15              0               0           0.00K        0.00K
+21              0               0           0.00K        0.00K
+171             0               0          10.70M        0.00K
+172             0               0           0.00K        0.00K
+203             0               0          50.00K        0.00K
+               FLOOD_CAUSE BEGIN_LAT BEGIN_LON END_LAT  END_LON MONTH_NAME
+7                  Ice Jam   44.8782  -87.8899 44.8954 -87.8897    January
+15  Heavy Rain / Snow Melt   44.4643  -87.5041 44.4632 -87.5046    January
+21  Heavy Rain / Snow Melt   44.9111  -87.8442 44.8948 -87.8372    January
+171                           0.0000    0.0000  0.0000   0.0000    January
+172                           0.0000    0.0000  0.0000   0.0000    January
+203             Heavy Rain   36.1542  -81.8054 36.2495 -81.8980    January
+       BEGIN_DATE_TIME      END_DATE_TIME BEGIN_YEARMONTH END_YEARMONTH
+7   01-JAN-20 00:00:00 02-JAN-20 09:00:00          202001        202001
+15  01-JAN-20 00:00:00 31-JAN-20 23:59:00          202001        202001
+21  01-JAN-20 00:00:00 31-JAN-20 23:59:00          202001        202001
+171 11-JAN-20 08:00:00 13-JAN-20 13:00:00          202001        202001
+172 11-JAN-20 13:00:00 11-JAN-20 13:00:00          202001        202001
+203 11-JAN-20 21:00:00 12-JAN-20 03:00:00          202001        202001
+         EVENT_TYPE
+7             Flood
+15            Flood
+21            Flood
+171 Lakeshore Flood
+172 Lakeshore Flood
+203     Flash Flood</code></pre>
+</div>
+</div>
+</section>
+<section id="eda" class="level2">
+<h2 class="anchored" data-anchor-id="eda">EDA</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="midterm615_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The analysis presented in Graph 1 provided a clear depiction of the human impact associated with different types of floods for the years 2020 and 2021. Flash floods were identified as the most lethal, with the total number of deaths significantly exceeding the number of injuries, emphasizing the acute danger they posed. The category labelled ‘Flood’ was the second most significant in terms of human impact, contributing considerably to the overall toll of casualties. In contrast, ‘Lakeshore Flood’ and ‘Coastal Flood’ events were associated with the fewest injuries and reported no fatalities.</p>
+<p>In total, there were 295 recorded instances of injuries and deaths related to floods, with flash floods accounting for an overwhelming 84% of these incidents. This data highlights the disproportionate risk of flash floods, reinforcing the need for targeted resources and safety measures to mitigate their threat. Even ‘Lakeshore’ and ‘Coastal’ floods, which had less impact in comparison, still resulted in harm, indicating that all types of floods carry inherent risks and warrant attention in disaster preparedness and response strategies.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="midterm615_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Between 2020 and 2021, flash floods were not only the deadliest but also the most economically damaging type of flood. Property damage from flash floods amounted to 130,445.4k (130.4 million USD), nearly twice as much as the crop damage caused by the same flood type. The broadly categorized ‘Flood’ events resulted in the second-highest economic loss, impacting property and crops significantly. ‘Lakeshore Floods,’ while less fatal, still led to substantial property damage but did not affect crop yields. ‘Coastal Floods’ had the least economic impact, with 2,842k (2.8 million USD) in property damage and a minimal 2k (2,000 USD) in crop damage.</p>
+<p>In total, the economic toll from floods over this period exceeded 190,000k (190 million USD). Flash floods accounted for over 70% of this economic burden, highlighting their severe financial consequences and risk to human safety. Even the less lethal flood types, such as ‘Lakeshore’ and ‘Coastal’ floods, still resulted in notable damages, contributing 2,844k (2.8 million USD) to the overall economic losses.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="midterm615_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   STATE          Flood_Count Frequency_Level
+   &lt;chr&gt;                &lt;int&gt; &lt;chr&gt;          
+ 1 virginia              1040 High Frequency 
+ 2 missouri               797 High Frequency 
+ 3 texas                  751 High Frequency 
+ 4 kentucky               696 High Frequency 
+ 5 new york               611 High Frequency 
+ 6 georgia                527 High Frequency 
+ 7 maryland               527 High Frequency 
+ 8 north carolina         521 High Frequency 
+ 9 pennsylvania           507 High Frequency 
+10 florida                491 High Frequency </code></pre>
+</div>
+</div>
+<p>In examining the geographic distribution of flood events across the United States, the data from 2020 and 2021 indicates that certain states experienced a higher frequency of flooding. Particularly, Virginia, Missouri, and Texas stand out, with recorded flood event counts of 1040, 797, and 751, respectively. The visualization employs varying shades of blue to denote the prevalence of flooding, with darker hues signifying a more significant number of incidents.</p>
+<p>To further categorize the states based on flood frequency, a classification system was implemented using quartiles. This system delineates states into four distinct groups:</p>
+<p>High frequency: These states fall within the top 25% for flood counts and are predominantly located in the eastern United States. The data indicates that are 14 states in this highest category, suggesting that eastern states are more frequently affected by floods.</p>
+<p>Moderate frequency: States ranking between the top 25% and the median for flood counts.</p>
+<p>Low frequency: States with flood counts between the median and the bottom 25%.</p>
+<p>Very low frequency: States in the bottom 25% for flood counts.</p>
+<p>This quartile-based categorization underscores a discernible pattern: communities in the eastern U.S. are more often impacted by floods. This could be due to various factors, including geographic location, climate patterns, and the presence of river systems that are prone to overflow.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="midterm615_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Graph 4 illustrates the temporal distribution of flood events over 2020 and 2021, revealing fluctuations in frequency throughout the two years. The first half of 2020 saw a gradual increase in flood events, peaking in August before experiencing a decline that continued into early 2021, reaching its nadir in January. However, a significant surge followed, culminating in the highest recorded flood events in July 2021 before tapering off again toward January 2022. Notably, the rise in flood frequency from January to July 2021 was steeper than the same period in 2020, suggesting an upward trend in flood events year over year.</p>
+<p>The data also exhibits a seasonal pattern, with flood events tending to escalate from January to July and diminish from July to January. This indicates that floods are more prevalent in the first half of the year. Such a pattern suggests that communities, particularly those in flood-prone regions, may face greater risks and potential losses during this time. This seasonal trend in flood events aligns with periods of heavy rainfall and melting snow, common in many regions during the spring and early summer months.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 5
+  FLOOD_CAUSE                    Count TotalInjuries TotalDeaths TotalDamage
+  &lt;fct&gt;                          &lt;int&gt;         &lt;int&gt;       &lt;int&gt;       &lt;dbl&gt;
+1 ""                               560             4           0       7299 
+2 "Dam / Levee Break"               17             0           0        324.
+3 "Heavy Rain"                   12373            65         197     158756.
+4 "Heavy Rain / Burn Area"         139            13           6       4497.
+5 "Heavy Rain / Snow Melt"         248             0           3       3628.
+6 "Heavy Rain / Tropical System"   293             1           4       7445.
+7 "Ice Jam"                         27             1           0       7706 
+8 "Planned Dam Release"              4             0           1         50 </code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="midterm615_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Graph 5 and the accompanying analysis identify seven flooding causes, with heavy rain emerging as the predominant factor, overwhelmingly exceeding other causes in total deaths, counts, injuries, and damages incurred. While other causes appear marginal in comparison, flooding resulting from heavy rain in combination with burn areas has resulted in a significant number of total injuries.</p>
+<p>The data underlines that flooding triggered by heavy rain is not only responsible for more than 90% of flood events but also accounts for the majority of the adverse outcomes: 84% of the total damage, 93% of the total deaths, and 77% of the total injuries. This pattern suggests that communities susceptible to heavy rainfall, particularly those in regions where the land may not absorb large volumes of water quickly, face heightened risks. Furthermore, areas recovering from wildfires, as indicated by the ‘heavy rain or burn area’ cause, are particularly vulnerable to injuries from flooding due to the destabilized ground and lack of vegetation. These findings highlight the need for targeted flood risk assessments and robust emergency planning in communities prone to heavy rainfall events, especially those with additional environmental vulnerabilities.</p>
+<p>In conclusion, Floods pose a significant threat to life and property across the United States, with certain types of floods, like flash floods, being particularly dangerous and costly. The distribution of flood events reveals a higher vulnerability for communities in the eastern states, with a distinct seasonal increase in flood frequency observed during the first half of the year. The overwhelming cause of the flooding is heavy rainfall, which calls for targeted flood risk assessments and the implementation of robust emergency planning and preparedness measures, especially in communities that are prone to heavy rainfall or have additional environmental vulnerabilities, such as recently burned areas. As the data suggests, while the human and financial costs of floods are substantial, with informed strategies and preparedness, these impacts can be mitigated. This analysis underscores the importance of ongoing research and data collection to refine our understanding of floods and enhance our resilience to these natural disasters.</p>
+</section>
+<section id="appendix" class="level2">
+<h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)  </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Import Datasets from NOAA</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>fatalities2020 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_fatalities-ftp_v1.0_d2020_c20230927.csv"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>fatalities2021 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_fatalities-ftp_v1.0_d2021_c20231017.csv"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>location2021 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_locations-ftp_v1.0_d2021_c20231017.csv"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>location2020 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/location_d2020.csv"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>detail2021 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_details-ftp_v1.0_d2021_c20231017.csv"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>detail2020 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_details-ftp_v1.0_d2020_c20230927.csv"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate keys</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">any</span>(<span class="fu">duplicated</span>(detail2020<span class="sc">$</span>EVENT_ID)) <span class="sc">|</span> <span class="fu">any</span>(<span class="fu">duplicated</span>(detail2021<span class="sc">$</span>EVENT_ID))) {</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"Duplicate EVENT_IDs found in detail datasets."</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Pre-process datasets </span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge in steps</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>combinedDetails <span class="ot">&lt;-</span> <span class="fu">rbind</span>(detail2020, detail2021)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>combinedLocations <span class="ot">&lt;-</span> <span class="fu">rbind</span>(location2020, location2021)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>combinedFatalities <span class="ot">&lt;-</span> <span class="fu">rbind</span>(fatalities2020, fatalities2021)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">merge</span>(combinedDetails, combinedLocations, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"EVENT_ID"</span>, <span class="st">"EPISODE_ID"</span>), <span class="at">all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">merge</span>(combined, combinedFatalities, <span class="at">by =</span> <span class="st">"EVENT_ID"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Post-process merged dataset</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> combined[<span class="sc">!</span><span class="fu">duplicated</span>(combined<span class="sc">$</span>EVENT_ID), ]</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the types of floods to filter</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>floodTypes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Flood"</span>, <span class="st">"Coastal Flood"</span>, <span class="st">"Flash Flood"</span>, <span class="st">"Lakeshore Flood"</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Flood events</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> combined[combined<span class="sc">$</span>EVENT_TYPE <span class="sc">%in%</span> floodTypes, ]</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Get unique incidents of flood and print them</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>unique_incidents <span class="ot">&lt;-</span> <span class="fu">unique</span>(combined<span class="sc">$</span>EVENT_TYPE)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_incidents)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>combined1 <span class="ot">&lt;-</span> combined[, <span class="fu">c</span>(<span class="st">"EVENT_ID"</span>, <span class="st">"EPISODE_ID"</span>, <span class="st">"STATE"</span>, <span class="st">"YEAR"</span>, <span class="st">"INJURIES_DIRECT"</span>, <span class="st">"INJURIES_INDIRECT"</span>, <span class="st">"DEATHS_DIRECT"</span>, <span class="st">"DEATHS_INDIRECT"</span>, <span class="st">"DAMAGE_PROPERTY"</span>, <span class="st">"DAMAGE_CROPS"</span>, <span class="st">"FLOOD_CAUSE"</span>, <span class="st">"BEGIN_LAT"</span>, <span class="st">"BEGIN_LON"</span>, <span class="st">"END_LAT"</span>, <span class="st">"END_LON"</span>, <span class="st">"MONTH_NAME"</span>, <span class="st">"BEGIN_DATE_TIME"</span>, <span class="st">"END_DATE_TIME"</span>,<span class="st">"BEGIN_YEARMONTH"</span>, <span class="st">"END_YEARMONTH"</span>,<span class="st">"EVENT_TYPE"</span>)]</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Count missing values in each column of the dataset</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(combined1))</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Count total missing values in the dataset</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(combined1))</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>combined1[<span class="fu">is.na</span>(combined1)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combined1)</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>combined1 <span class="ot">&lt;-</span> combined1 <span class="sc">%&gt;%</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Total_Injuries =</span> INJURIES_DIRECT <span class="sc">+</span> INJURIES_INDIRECT,</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>         <span class="at">Total_Deaths =</span> DEATHS_DIRECT <span class="sc">+</span> DEATHS_INDIRECT)</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize total injuries and deaths by flood type</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>injuries_deaths_by_type <span class="ot">&lt;-</span> combined1 <span class="sc">%&gt;%</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(EVENT_TYPE) <span class="sc">%&gt;%</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Injuries =</span> <span class="fu">sum</span>(Total_Injuries, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Deaths =</span> <span class="fu">sum</span>(Total_Deaths, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape the data into long format</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>injuries_deaths_long <span class="ot">&lt;-</span> injuries_deaths_by_type <span class="sc">%&gt;%</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(Total_Injuries, Total_Deaths), <span class="at">names_to =</span> <span class="st">"Metric"</span>, <span class="at">values_to =</span> <span class="st">"Count"</span>)</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a custom color palette</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>custom_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#1f77b4"</span>, <span class="st">"#ff7f0e"</span>)</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(injuries_deaths_long, <span class="fu">aes</span>(<span class="at">x =</span> EVENT_TYPE, <span class="at">y =</span> Count, <span class="at">fill =</span> Metric)) <span class="sc">+</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">position =</span> <span class="st">'dodge'</span>) <span class="sc">+</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> custom_colors) <span class="sc">+</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Count), </span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>), <span class="co"># Adjust position to match the dodge of the bars</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.25</span>, <span class="co"># Adjust vertical position to place above the bars</span></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>), <span class="co"># Rotate x labels for better visibility</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span> <span class="co"># Move legend to the top for better readability</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Graph 1:Injuries and Deaths by Flood Type'</span>,</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">'Flood Type'</span>,</span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Count'</span>,</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">'Metric'</span>)</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>convert_damage <span class="ot">&lt;-</span> <span class="cf">function</span>(damage) {</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>  damage <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[^0-9.]"</span>, <span class="st">""</span>, <span class="fu">as.character</span>(damage))</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(damage)</span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>combined1<span class="sc">$</span>DAMAGE_PROPERTY <span class="ot">&lt;-</span> <span class="fu">convert_damage</span>(combined1<span class="sc">$</span>DAMAGE_PROPERTY)</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>combined1<span class="sc">$</span>DAMAGE_CROPS <span class="ot">&lt;-</span> <span class="fu">convert_damage</span>(combined1<span class="sc">$</span>DAMAGE_CROPS)</span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>damage_by_type <span class="ot">&lt;-</span> combined1 <span class="sc">%&gt;%</span></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(EVENT_TYPE) <span class="sc">%&gt;%</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Property_Damage =</span> <span class="fu">sum</span>(DAMAGE_PROPERTY, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Crop_Damage =</span> <span class="fu">sum</span>(DAMAGE_CROPS, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape the data into long format for plotting</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>damage_long <span class="ot">&lt;-</span> damage_by_type <span class="sc">%&gt;%</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(Total_Property_Damage, Total_Crop_Damage), <span class="at">names_to =</span> <span class="st">"Damage_Type"</span>, <span class="at">values_to =</span> <span class="st">"Amount"</span>)</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure that Damage_Type is a factor and has the correct levels</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>damage_long<span class="sc">$</span>Damage_Type <span class="ot">&lt;-</span> <span class="fu">factor</span>(damage_long<span class="sc">$</span>Damage_Type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Total_Property_Damage"</span>, <span class="st">"Total_Crop_Damage"</span>))</span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a custom color palette</span></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure the names match the levels of the Damage_Type factor</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>custom_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Total_Property_Damage"</span> <span class="ot">=</span> <span class="st">"#1b9e77"</span>, <span class="st">"Total_Crop_Damage"</span> <span class="ot">=</span> <span class="st">"#d95f02"</span>)</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot for property and crop damage by flood type</span></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>ggplot_object <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(damage_long, <span class="fu">aes</span>(<span class="at">x =</span> EVENT_TYPE, <span class="at">y =</span> Amount, <span class="at">fill =</span> Damage_Type)) <span class="sc">+</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">position =</span> <span class="st">'dodge'</span>) <span class="sc">+</span></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> custom_colors) <span class="sc">+</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Graph 2: Property and Crop Damage by Flood Type'</span>,</span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">'Flood Type'</span>,</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Total Damage ($) in k'</span>,</span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">'Type of Damage'</span>) <span class="sc">+</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">comma</span>(Amount), <span class="at">group =</span> Damage_Type), </span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>), </span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.25</span>, </span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">3.5</span>)</span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the plot</span></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ggplot_object)</span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize flood events by state</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>flood_summary <span class="ot">&lt;-</span> combined1 <span class="sc">%&gt;%</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(STATE) <span class="sc">%&gt;%</span></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Flood_Count =</span> <span class="fu">n</span>())</span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="co"># Get map data for the United States</span></span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>states_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the flood summary with the map data</span></span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure the state names match in case format or naming conventions differ</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>flood_summary<span class="sc">$</span>STATE <span class="ot">&lt;-</span> <span class="fu">tolower</span>(flood_summary<span class="sc">$</span>STATE)</span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>map_data_merged <span class="ot">&lt;-</span> <span class="fu">merge</span>(states_map, flood_summary, <span class="at">by.x =</span> <span class="st">"region"</span>, <span class="at">by.y =</span> <span class="st">"STATE"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace NA with 0 for states with no flood data</span></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>map_data_merged<span class="sc">$</span>Flood_Count[<span class="fu">is.na</span>(map_data_merged<span class="sc">$</span>Flood_Count)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the map</span></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> map_data_merged, <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat, <span class="at">group =</span> group, <span class="at">fill =</span> Flood_Count)) <span class="sc">+</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"lightblue"</span>, <span class="at">high =</span> <span class="st">"darkblue"</span>, <span class="at">na.value =</span> <span class="st">"grey50"</span>, <span class="at">name =</span> <span class="st">"Flood Count"</span>) <span class="sc">+</span></span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Graph 3: Flood Counts by State"</span>) <span class="sc">+</span></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(flood_summary<span class="sc">$</span>Flood_Count, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorize states into frequency levels</span></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>flood_summary <span class="ot">&lt;-</span> flood_summary <span class="sc">%&gt;%</span></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Frequency_Level =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>    Flood_Count <span class="sc">&gt;</span> quantiles[<span class="dv">3</span>] <span class="sc">~</span> <span class="st">'High Frequency'</span>,</span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>    Flood_Count <span class="sc">&gt;</span> quantiles[<span class="dv">2</span>] <span class="sc">~</span> <span class="st">'Moderate Frequency'</span>,</span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>    Flood_Count <span class="sc">&gt;</span> quantiles[<span class="dv">1</span>] <span class="sc">~</span> <span class="st">'Low Frequency'</span>,</span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">'Very Low Frequency'</span></span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>top_flood_states <span class="ot">&lt;-</span> flood_summary <span class="sc">%&gt;%</span></span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Flood_Count)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) </span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a><span class="co"># View the top 10 states with the highest flood counts</span></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_flood_states)</span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure BEGIN_DATE_TIME is in the correct datetime format</span></span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>combined1<span class="sc">$</span>BEGIN_DATE_TIME <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(combined1<span class="sc">$</span>BEGIN_DATE_TIME, <span class="at">format =</span> <span class="st">"%d-%b-%y %T"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the data by month and year, or by another suitable time period</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>floods_over_time <span class="ot">&lt;-</span> combined1 <span class="sc">%&gt;%</span></span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">YearMonth =</span> <span class="fu">floor_date</span>(BEGIN_DATE_TIME, <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">NumberOfEvents =</span> <span class="fu">n</span>())</span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a time series plot</span></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(floods_over_time, <span class="fu">aes</span>(<span class="at">x =</span> YearMonth, <span class="at">y =</span> NumberOfEvents)) <span class="sc">+</span></span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">group =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span> <span class="co"># Group is set to 1 because we want to connect all points</span></span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="co"># Add points to mark each time period</span></span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Graph 4: Distribution of Flood Events Over Time"</span>, <span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">y =</span> <span class="st">"Number of Events"</span>) <span class="sc">+</span></span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="co"># Rota</span></span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a>flood_cause_stats <span class="ot">&lt;-</span> combined1 <span class="sc">%&gt;%</span></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FLOOD_CAUSE) <span class="sc">%&gt;%</span></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a>    <span class="at">Count =</span> <span class="fu">n</span>(),</span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalInjuries =</span> <span class="fu">sum</span>(INJURIES_DIRECT <span class="sc">+</span> INJURIES_INDIRECT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalDeaths =</span> <span class="fu">sum</span>(DEATHS_DIRECT <span class="sc">+</span> DEATHS_INDIRECT, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalDamage =</span> <span class="fu">sum</span>(DAMAGE_PROPERTY <span class="sc">+</span> DAMAGE_CROPS, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FLOOD_CAUSE =</span> <span class="fu">factor</span>(FLOOD_CAUSE, <span class="at">levels =</span> FLOOD_CAUSE[<span class="fu">order</span>(Count, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)])) <span class="co"># Order factors by count</span></span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a><span class="co"># View the updated summary</span></span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(flood_cause_stats)</span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>flood_cause_melted <span class="ot">&lt;-</span> flood_cause_stats <span class="sc">%&gt;%</span></span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">"Metric"</span>, <span class="at">value =</span> <span class="st">"Value"</span>, <span class="sc">-</span>FLOOD_CAUSE)</span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(flood_cause_melted, <span class="fu">aes</span>(<span class="at">x =</span> FLOOD_CAUSE, <span class="at">y =</span> Value, <span class="at">fill =</span> Metric)) <span class="sc">+</span></span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span></span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Metric, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Graph 5: Flood Impact by Cause"</span>, <span class="at">x =</span> <span class="st">"Cause of Flood"</span>, <span class="at">y =</span> <span class="st">"Total"</span>) <span class="sc">+</span></span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="co">#</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -40,12 +40,12 @@ library(scales)
 
 ```{r warning=FALSE, message=FALSE,echo = FALSE}
 # Import Datasets from NOAA
-fatalities2020 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_fatalities-ftp_v1.0_d2020_c20230927.csv")
-fatalities2021 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_fatalities-ftp_v1.0_d2021_c20231017.csv")
-location2021 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_locations-ftp_v1.0_d2021_c20231017.csv")
-location2020 <- read.csv("/Users/user/Desktop/615 midterm/location_d2020.csv")
-detail2021 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_details-ftp_v1.0_d2021_c20231017.csv")
-detail2020 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_details-ftp_v1.0_d2020_c20230927.csv")
+fatalities2020 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_fatalities-ftp_v1.0_d2020_c20230927.csv")
+fatalities2021 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_fatalities-ftp_v1.0_d2021_c20231017.csv")
+location2021 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_locations-ftp_v1.0_d2021_c20231017.csv")
+location2020 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/location_d2020.csv")
+detail2021 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_details-ftp_v1.0_d2021_c20231017.csv")
+detail2020 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_details-ftp_v1.0_d2020_c20230927.csv")
 ```
 
 
@@ -319,12 +319,12 @@ library(ggplot2)
 library(maps)
 library(scales) 
 # Import Datasets from NOAA
-fatalities2020 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_fatalities-ftp_v1.0_d2020_c20230927.csv")
-fatalities2021 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_fatalities-ftp_v1.0_d2021_c20231017.csv")
-location2021 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_locations-ftp_v1.0_d2021_c20231017.csv")
-location2020 <- read.csv("/Users/user/Desktop/615 midterm/location_d2020.csv")
-detail2021 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_details-ftp_v1.0_d2021_c20231017.csv")
-detail2020 <- read.csv("/Users/user/Desktop/615 midterm/StormEvents_details-ftp_v1.0_d2020_c20230927.csv")
+fatalities2020 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_fatalities-ftp_v1.0_d2020_c20230927.csv")
+fatalities2021 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_fatalities-ftp_v1.0_d2021_c20231017.csv")
+location2021 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_locations-ftp_v1.0_d2021_c20231017.csv")
+location2020 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/location_d2020.csv")
+detail2021 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_details-ftp_v1.0_d2021_c20231017.csv")
+detail2020 <- read.csv("/Users/user/Desktop/aug 14 demo/615midterm/615_midterm/datasets/StormEvents_details-ftp_v1.0_d2020_c20230927.csv")
 # Validate keys
 if(any(duplicated(detail2020$EVENT_ID)) | any(duplicated(detail2021$EVENT_ID))) {
   stop("Duplicate EVENT_IDs found in detail datasets.")
